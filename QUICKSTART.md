@@ -19,10 +19,10 @@ sudo sh get-docker.sh
 # Перейдите в директорию проекта
 
 # Запустите все сервисы
-docker-compose up -d
+docker compose up -d
 
 # Проверьте статус
-docker-compose ps
+docker compose ps
 ```
 
 ### 3. Проверка работы
@@ -40,14 +40,14 @@ curl http://localhost:54104
 ./test-security.sh
 
 # Проверьте алерты
-docker-compose exec crowdsec cscli alerts list
+docker compose exec crowdsec cscli alerts list
 ```
 
 ## 🎯 Что получите
 
 - ✅ **Nginx** веб-сервер на портах 54104 и 57885
 - ✅ **CrowdSec** анализ безопасности в реальном времени  
-- ✅ **Metabase** веб-интерфейс мониторинга на порту 3000
+- ✅ **Dashboard** веб-интерфейс мониторинга на порту 3000
 - ✅ **Автоматические алерты** при обнаружении атак
 - ✅ **Готовые тесты** для проверки системы
 
@@ -88,25 +88,25 @@ make status
 make logs
 
 # Алерты CrowdSec
-docker-compose exec crowdsec cscli alerts list
+docker compose exec crowdsec cscli alerts list
 
 # Метрики
-docker-compose exec crowdsec cscli metrics
+docker compose exec crowdsec cscli metrics
 
 # Остановка
-docker-compose down
+docker compose down
 ```
 
 ## 🆘 Если что-то не работает
 
 1. **Проверьте логи**:
    ```bash
-   docker-compose logs
+   docker compose logs
    ```
 
 2. **Перезапустите сервисы**:
    ```bash
-   docker-compose restart
+   docker compose restart
    ```
 
 3. **Проверьте порты**:
@@ -116,8 +116,8 @@ docker-compose down
 
 4. **Очистите и пересоздайте**:
    ```bash
-   docker-compose down -v
-   docker-compose up -d
+   docker compose down -v
+   docker compose up -d
    ```
 
 ## 📚 Дополнительная документация

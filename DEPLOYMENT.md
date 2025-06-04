@@ -46,13 +46,13 @@ recipients:
 
 ```bash
 # Запуск всех сервисов
-docker-compose up -d
+docker compose up -d
 
 # Проверка статуса
-docker-compose ps
+docker compose ps
 
 # Просмотр логов
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ### 4. Проверка работоспособности
@@ -62,10 +62,10 @@ docker-compose logs -f
 curl http://localhost:54104
 
 # Проверка CrowdSec
-docker-compose exec crowdsec cscli metrics
+docker compose exec crowdsec cscli metrics
 
 # Просмотр алертов
-docker-compose exec crowdsec cscli alerts list
+docker compose exec crowdsec cscli alerts list
 ```
 
 ## Архитектура решения
@@ -182,7 +182,7 @@ docker-compose exec crowdsec cscli hub update
 ## Веб-интерфейсы
 
 - **Основной сайт**: http://localhost:54104
-- **Metabase (мониторинг)**: http://localhost:3000
+- **Dashboard (мониторинг)**: http://localhost:3000
 - **Nginx статус**: http://localhost:54104/nginx_status (только локально)
 
 ## Безопасность
@@ -234,25 +234,25 @@ docker-compose exec crowdsec cscli hub update
 1. **CrowdSec не запускается**
    ```bash
    # Проверьте логи
-   docker-compose logs crowdsec
+   docker compose logs crowdsec
    
    # Проверьте конфигурацию
-   docker-compose exec crowdsec cscli config show
+   docker compose exec crowdsec cscli config show
    ```
 
 2. **Уведомления не приходят**
    ```bash
    # Проверьте конфигурацию уведомлений
-   docker-compose exec crowdsec cscli notifications list
+   docker compose exec crowdsec cscli notifications list
    
    # Тест уведомлений
-   docker-compose exec crowdsec cscli notifications test slack_alerts
+   docker compose exec crowdsec cscli notifications test slack_alerts
    ```
 
 3. **Высокое потребление ресурсов**
    ```bash
    # Проверьте метрики
-   docker-compose exec crowdsec cscli metrics
+   docker compose exec crowdsec cscli metrics
    
    # Настройте лимиты в docker-compose.yml
    ```

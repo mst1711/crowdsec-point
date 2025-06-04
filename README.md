@@ -99,22 +99,22 @@ curl http://localhost:54104/config.php
 ### Просмотр логов
 ```bash
 # Логи nginx
-docker-compose logs nginx
+docker compose logs nginx
 
 # Логи CrowdSec
-docker-compose logs crowdsec
+docker compose logs crowdsec
 
 # Алерты CrowdSec
-docker-compose exec crowdsec cscli alerts list
+docker compose exec crowdsec cscli alerts list
 ```
 
 ### Статистика
 ```bash
 # Статистика обнаружений
-docker-compose exec crowdsec cscli metrics
+docker compose exec crowdsec cscli metrics
 
 # Активные решения (бан-лист)
-docker-compose exec crowdsec cscli decisions list
+docker compose exec crowdsec cscli decisions list
 ```
 
 ## Структура файлов
@@ -152,7 +152,7 @@ docker-compose exec crowdsec cscli decisions list
 
 1. Установите bouncer для nginx:
    ```bash
-   docker-compose exec crowdsec cscli bouncers add nginx-bouncer
+   docker compose exec crowdsec cscli bouncers add nginx-bouncer
    ```
 
 2. Настройте nginx для использования CrowdSec API
