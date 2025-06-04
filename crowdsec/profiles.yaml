@@ -1,0 +1,27 @@
+# Профили для обработки алертов - только уведомления, без блокировки
+name: default_ip_remediation
+debug: true
+filters:
+  - Alert.Remediation == true && Alert.GetScope() == "Ip"
+decisions:
+  - type: ban
+    duration: 4h
+    scope: Ip
+on_success: break
+notifications:
+  - slack_alerts
+  - email_alerts
+
+---
+name: default_range_remediation  
+debug: true
+filters:
+  - Alert.Remediation == true && Alert.GetScope() == "Range"
+decisions:
+  - type: ban
+    duration: 4h
+    scope: Range
+on_success: break
+notifications:
+  - slack_alerts
+  - email_alerts

@@ -1,0 +1,26 @@
+# Конфигурация уведомлений в Slack
+type: slack
+name: slack_alerts
+
+# Замените на ваш Slack webhook URL
+url: "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+
+format: |
+  🚨 **CrowdSec Alert** 🚨
+  
+  **Scenario:** {{range .}}{{.Scenario}}{{end}}
+  **Source IP:** {{range .}}{{.Source.IP}}{{end}}
+  **Country:** {{range .}}{{.Source.Cn}}{{end}}
+  **ASN:** {{range .}}{{.Source.AsName}}{{end}}
+  **Events Count:** {{range .}}{{.Events | len}}{{end}}
+  **Decision:** {{range .}}{{.Decisions.Type}}{{end}} for {{range .}}{{.Decisions.Duration}}{{end}}
+  
+  **Time:** {{range .}}{{.CreatedAt}}{{end}}
+  
+  **Events:**
+  {{range .}}{{range .Events}}
+  - {{.Timestamp}}: {{.Meta.http_path}} from {{.Meta.source_ip}}
+  {{end}}{{end}}
+
+# Дополнительные настройки
+timeout: 10s

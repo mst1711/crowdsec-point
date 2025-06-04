@@ -1,0 +1,11 @@
+# Конфигурация источников данных для CrowdSec
+filenames:
+  - /var/log/nginx/access.log
+labels:
+  type: nginx
+
+---
+filenames:
+  - /var/log/nginx/error.log
+labels:
+  type: nginx-error

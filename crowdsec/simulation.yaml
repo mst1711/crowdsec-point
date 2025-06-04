@@ -1,0 +1,11 @@
+# Файл симуляции - здесь можно отключить определенные сценарии от блокировки
+# Все сценарии в режиме симуляции будут только алертить, но не блокировать
+
+# Отключаем блокировку для всех nginx сценариев (только алерты)
+- crowdsecurity/nginx-bf
+- crowdsecurity/nginx-req-limit-exceeded  
+- crowdsecurity/http-crawl-non_statics
+- crowdsecurity/http-bad-user-agent
+- crowdsecurity/http-sensitive-files
+- crowdsecurity/nginx-cc-backend
+- crowdsecurity/nginx-cc-frontend

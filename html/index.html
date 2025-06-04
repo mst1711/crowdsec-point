@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nginx + CrowdSec Security Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ Nginx + CrowdSec Security Monitoring</h1>
+        
+        <div class="status">
+            <strong>✅ Система активна</strong><br>
+            Nginx сервер работает и защищен CrowdSec
+        </div>
+        
+        <h2>Что мониторится:</h2>
+        <ul>
+            <li><strong>DDoS атаки</strong> - обнаружение аномального количества запросов</li>
+            <li><strong>Боты и сканеры</strong> - подозрительные User-Agent и поведение</li>
+            <li><strong>Брутфорс атаки</strong> - множественные неудачные попытки доступа</li>
+            <li><strong>Сканирование уязвимостей</strong> - попытки доступа к чувствительным файлам</li>
+            <li><strong>HTTP флуд</strong> - превышение лимитов запросов</li>
+        </ul>
+        
+        <h2>Доступные эндпоинты:</h2>
+        <ul>
+            <li><code>/</code> - главная страница</li>
+            <li><code>/nginx_status</code> - статус nginx (только для локальных IP)</li>
+        </ul>
+        
+        <div class="warning">
+            <strong>⚠️ Режим мониторинга</strong><br>
+            CrowdSec настроен только на алертинг. Подозрительный трафик не блокируется, 
+            но все инциденты логируются и отправляются уведомления.
+        </div>
+        
+        <h2>Мониторинг:</h2>
+        <p>Веб-интерфейс Metabase доступен по адресу: <a href="http://localhost:3000">http://localhost:3000</a></p>
+        
+        <h2>Тестирование:</h2>
+        <p>Для тестирования системы можно выполнить:</p>
+        <ul>
+            <li>Множественные быстрые запросы (симуляция DDoS)</li>
+            <li>Запросы с подозрительными User-Agent</li>
+            <li>Попытки доступа к несуществующим файлам</li>
+        </ul>
+        
+        <footer style="margin-top: 40px; text-align: center; color: #666;">
+            <p>Powered by Nginx + CrowdSec</p>
+        </footer>
+    </div>
+</body>
+</html>

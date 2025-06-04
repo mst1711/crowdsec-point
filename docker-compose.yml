@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-server
+    ports:
+      - "54104:80"
+      - "57885:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./logs/nginx:/var/log/nginx
+      - ./html:/usr/share/nginx/html:ro
+    depends_on:
+      - crowdsec
+    networks:
+      - crowdsec-network
+    restart: unless-stopped
+
+  crowdsec:
+    image: crowdsecurity/crowdsec:latest
+    container_name: crowdsec
+    environment:
+      - COLLECTIONS=crowdsecurity/nginx
+      - DISABLE_AGENT=false
+      - DISABLE_LOCAL_API=false
+      - LEVEL_INFO=true
+    volumes:
+      - ./crowdsec/acquis.yaml:/etc/crowdsec/acquis.yaml:ro
+      - ./crowdsec/config.yaml:/etc/crowdsec/config.yaml:ro
+      - ./crowdsec/profiles.yaml:/etc/crowdsec/profiles.yaml:ro
+      - ./crowdsec/notifications:/etc/crowdsec/notifications:ro
+      - ./logs/nginx:/var/log/nginx:ro
+      - crowdsec-db:/var/lib/crowdsec/data
+      - crowdsec-config:/etc/crowdsec
+    networks:
+      - crowdsec-network
+    restart: unless-stopped
+    command: >
+      sh -c "
+        cscli collections install crowdsecurity/nginx &&
+        cscli parsers install crowdsecurity/nginx-logs &&
+        cscli scenarios install crowdsecurity/nginx-bf &&
+        cscli scenarios install crowdsecurity/nginx-req-limit-exceeded &&
+        cscli scenarios install crowdsecurity/http-crawl-non_statics &&
+        cscli scenarios install crowdsecurity/http-bad-user-agent &&
+        cscli scenarios install crowdsecurity/http-sensitive-files &&
+        crowdsec
+      "
+
+  # Опциональный веб-интерфейс для мониторинга
+  metabase:
+    image: crowdsecurity/metabase
+    container_name: crowdsec-metabase
+    ports:
+      - "3000:3000"
+    environment:
+      - MB_DB_FILE=/data/metabase.db
+      - MGID=1000
+    volumes:
+      - crowdsec-db:/metabase-data
+    depends_on:
+      - crowdsec
+    networks:
+      - crowdsec-network
+    restart: unless-stopped
+
+volumes:
+  crowdsec-db:
+  crowdsec-config:
+
+networks:
+  crowdsec-network:
+    driver: bridge
